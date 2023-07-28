@@ -1,0 +1,19 @@
+body {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    width: 50%;
+    height: 50%;
+    margin: auto;
+    font-size: 16pt;
+}
+
+.top {
+    text-align: center;
+}
+
+li button {
+    float: right;
+}
