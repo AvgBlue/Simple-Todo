@@ -1,75 +1,52 @@
-var addBtn = document.getElementById("addBtn");
-addBtn.addEventListener("click", addAssignment);
+$("#addBtn").click(addAssignment);
 
 function addAssignment() {
-    var inputText = document.getElementById("newTask").value;
+    var inputText = $("#newTask").val();
     if (inputText === "") return;
 
-    var newAssignment = document.createElement("li");
+    var newAssignment = $("<li>");
+    var newSpan = $("<span>").text(inputText);
+    var newUpBtn = $("<button>").attr("class", "upBtn").text("Up").click(upAssignment);
+    var newDownBtn = $("<button>").attr("class", "downBtn").text("Down").click(downAssignment);
+    var newDeleteBtn = $("<button>").attr("class", "deleteBtn").text("Delete").click(deleteAssignment);
 
-    var newSpan = document.createElement("span");
-    newSpan.textContent = inputText;
-    newAssignment.appendChild(newSpan);
 
-    var newUpBtn = document.createElement("button");
-    newUpBtn.setAttribute("class", "upBtn");
-    newUpBtn.textContent = "Up";
-    newUpBtn.addEventListener("click", upAssignment);
-    newAssignment.appendChild(newUpBtn);
+    newAssignment.append(newSpan, newUpBtn, newDownBtn, newDeleteBtn)
 
-    var newDownBtn = document.createElement("button");
-    newDownBtn.setAttribute("class", "downBtn");
-    newDownBtn.textContent = "Down";
-    newDownBtn.addEventListener("click", downAssignment);
-    newAssignment.appendChild(newDownBtn);
+    $("#todoList").append(newAssignment);
 
-    var newDeleteBtn = document.createElement("button");
-    newDeleteBtn.setAttribute("class", "deleteBtn");
-    newDeleteBtn.textContent = "Delete";
-    newDeleteBtn.addEventListener("click", deleteAssignment);
-    newAssignment.appendChild(newDeleteBtn);
-
-    var todoList = document.getElementById("todoList");
-    todoList.appendChild(newAssignment);
-
-    document.getElementById("newTask").value = "";
+    $("#newTask").val("");
 }
 
 
 function upAssignment() {
-    var currentItem = this.parentElement;
-    var previousItem = currentItem.previousElementSibling;
+    var currentItem = $(this).parent();
+    var previousItem = currentItem.prev('li');
 
-    if (previousItem && previousItem.tagName === "LI") {
-        currentItem.parentElement.insertBefore(currentItem, previousItem);
+    if (previousItem.length > 0) {
+        currentItem.insertBefore(previousItem);
     }
 }
 
 function downAssignment() {
-    var currentItem = this.parentElement;
-    var nextItem = currentItem.nextElementSibling;
-
-    if (nextItem && nextItem.tagName === "LI") {
-        currentItem.parentElement.insertBefore(nextItem, currentItem);
+    var currentItem = $(this).parent();
+    var nextItem = currentItem.next('li');
+    
+    if (nextItem.length > 0) {
+        currentItem.insertAfter(nextItem);
     }
 }
 
 function deleteAssignment() {
-    var parentElement = this.parentElement;
-    parentElement.remove();
+    $(this).parent().remove();
 }
 
-var upBtns = document.getElementsByClassName("upBtn");
-for (var i = 0; i < upBtns.length; i++) {
-    upBtns[i].addEventListener("click", upAssignment);
-}
+$(document).ready(function () {
+    $(".upBtn").click(upAssignment);
+    $(".downBtn").click(downAssignment);
+    $(".deleteBtn").click(deleteAssignment);
+})
 
-var downBtns = document.getElementsByClassName("downBtn");
-for (var j = 0; j < downBtns.length; j++) {
-    downBtns[j].addEventListener("click", downAssignment);
-}
 
-var deleteBtns = document.getElementsByClassName("deleteBtn");
-for (var k = 0; k < deleteBtns.length; k++) {
-    deleteBtns[k].addEventListener("click", deleteAssignment);
-}
+
+
