@@ -1,4 +1,10 @@
-$("#addBtn").click(addAssignment);
+$(document).ready(function () {
+    $(".upBtn").click(upAssignment);
+    $(".downBtn").click(downAssignment);
+    $(".deleteBtn").click(deleteAssignment);
+
+    $("#addBtn").click(addAssignment);
+})
 
 function addAssignment() {
     var inputText = $("#newTask").val();
@@ -31,7 +37,7 @@ function upAssignment() {
 function downAssignment() {
     var currentItem = $(this).parent();
     var nextItem = currentItem.next('li');
-    
+
     if (nextItem.length > 0) {
         currentItem.insertAfter(nextItem);
     }
@@ -41,11 +47,6 @@ function deleteAssignment() {
     $(this).parent().remove();
 }
 
-$(document).ready(function () {
-    $(".upBtn").click(upAssignment);
-    $(".downBtn").click(downAssignment);
-    $(".deleteBtn").click(deleteAssignment);
-})
 
 
 
